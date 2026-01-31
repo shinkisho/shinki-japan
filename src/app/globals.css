@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+/* 既存のTailwindなどの下でOK */
+
+@keyframes gallery-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-1 * var(--scroll-distance)));
+  }
+}
+/* ✨ 星のきらめき */
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  /* 星の数を増やす */
+  background-image:
+    radial-gradient(3px 3px at 20% 30%, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 70% 60%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 40% 80%, rgba(255,255,255,0.85), transparent),
+    radial-gradient(3px 3px at 85% 20%, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 10% 70%, rgba(255,255,255,0.75), transparent),
+    radial-gradient(3px 3px at 55% 45%, rgba(255,255,255,0.95), transparent),
+    radial-gradient(2px 2px at 30% 10%, rgba(255,255,255,0.8), transparent);
+
+  background-repeat: repeat;
+  background-size: 400px 400px;
+
+  animation: starsMove var(--star-speed, 8s) linear infinite;
+  opacity: var(--star-opacity, 0.8);
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.8));
+}
+
+@keyframes starsMove {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-400px); }
+}
+
+
+.waves {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+opacity: var(--wave-opacity, 0.25);
+  mix-blend-mode: screen;
+
+  background:
+    radial-gradient(ellipse at 50% 120%, rgba(120,160,255,0.25), transparent 60%),
+    radial-gradient(ellipse at 80% 130%, rgba(180,140,255,0.18), transparent 65%),
+    radial-gradient(ellipse at 20% 125%, rgba(140,180,255,0.2), transparent 60%);
+
+  animation: waveDrift 18s ease-in-out infinite alternate;
+}
+
+@keyframes waveDrift {
+  0% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-40px) scale(1.05);
+  }
+  100% {
+    transform: translateY(20px) scale(1.08);
+  }
+}
+
+
+.animate-gallery {
+  animation: gallery-scroll var(--scroll-duration, 60s) linear infinite;
+}
+
+@media (max-width: 768px) {
+  .animate-gallery {
+    animation-duration: var(--scroll-duration-mobile, 20s);
+  }
+}
+
+.gallery-track:hover {
+  animation-play-state: paused;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+@keyframes slow-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.auto-scroll {
+  animation: slow-scroll 35s linear infinite;
+}
+
+.auto-scroll:hover {
+  animation-play-state: paused;
+}
+@keyframes auto-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.auto-scroll {
+  animation: auto-scroll 30s linear infinite;
+}
+.auto-scroll:hover {
+  animation-play-state: paused;
+}
+.keyword {
+  color: #8a8a8a;
+  transition: all 1s cubic-bezier(0.22,1,0.36,1);
+}
+
+.keyword.reveal {
+  color: #C7A24A;
+  text-shadow: 0 0 12px rgba(199,162,74,0.5);
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+@keyframes slow-pan {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-5%); }
+}
+
+.slow-pan {
+  animation: slow-pan 20s linear infinite alternate;
+}
