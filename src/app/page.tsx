@@ -96,17 +96,18 @@ const renderPlanTooltip = (plan: PlanKey, t: typeof content.en) => {
           <p key={i}>{line}</p>
         ))}
 
-        {data.highlight && (
-          <p className="italic text-neutral-300">
-            {data.highlight}
-          </p>
-        )}
+     {"highlight" in data && data.highlight && (
+  <p className="italic text-neutral-300">
+    {data.highlight}
+  </p>
+)}
 
-        {data.note && (
-          <p className="text-neutral-400 text-xs">
-            {data.note}
-          </p>
-        )}
+{"note" in data && data.note && (
+  <p className="text-neutral-400 text-xs">
+    {data.note}
+  </p>
+)}
+
       </div>
     </>
   );
