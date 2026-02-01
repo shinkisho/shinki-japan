@@ -280,7 +280,11 @@ const navLabels = {
     reviews: "Testimonianze",
   },
 } as const;
-  
+  type PlanDescription = {
+  lines: readonly string[]
+  highlight?: string
+  note?: string
+}
  const content = {
   
   en: {
@@ -347,7 +351,7 @@ termsLink: "Terms & Conditions",
     note:
       "Recommended: 15-day package · Extra days at a preferred rate",
   },
-},
+} satisfies Record<PlanKey, PlanDescription>,
  selectPlan: "Select Your Plan",
     reasonLabel: "Reason",
     heroTitle1: "Fully bespoke private journeys",
@@ -536,7 +540,7 @@ termsLink: "los Términos y Condiciones",
     note:
       "Recomendado: paquete de 15 días · Días extra a tarifa preferencial",
   },
-},
+} satisfies Record<PlanKey, PlanDescription>,
 
      reasonLabel: "Razón",
     heroTitle1: "Viajes privados completamente personalizados",
@@ -727,7 +731,7 @@ termsLink: "i Termini e Condizioni",
     note:
       "Consigliato: pacchetto da 15 giorni · Giorni extra a tariffa preferenziale",
   },
-},
+} satisfies Record<PlanKey, PlanDescription>,
 selectPlan: "Seleziona il tuo piano",
        reasonLabel: "Motivo",
     heroTitle1: "Viaggi privati totalmente su misura",
