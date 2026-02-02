@@ -80,9 +80,125 @@ const reviews = [
 
 ];
 /* ---------------- pricing logic ---------------- */
+
+type Locale = "en" | "es" | "it";
+
+
 type PlanKey = "basic" | "standard" | "pro";
-type ContentType = typeof content["en"];
-const renderPlanTooltip = (plan: PlanKey, t: typeof content.en) => {
+
+type ContentSchema = {
+  /* CTA */
+  ctaShort: Record<PlanKey, string>;
+  cta: Record<PlanKey, string>;
+  ctaConsultation: string;
+  heroCtaConsult: string;
+  heroCtaWhatsapp: string;
+
+  /* Hero */
+  heroTitle1: string;
+  heroTitle2: string;
+
+  /* Why section */
+  whyTitle: string;
+  whyHeading: string;
+  whyLead: string;
+  whyPoints: readonly string[];
+  reasonLabel: string;
+  reasons:readonly {
+     readonly title: string;
+     readonly body:  readonly string[];
+  }[];
+
+  /* Profile */
+  profile: {
+    nameLabel: string;
+    bornLabel: string;
+    fromLabel: string;
+    backgroundLabel: string;
+    languagesLabel: string;
+    interestsLabel: string;
+    admireLabel: string;
+    guideLabel: string;
+
+    born: string;
+    from: string;
+    background: readonly string[];
+    languages: readonly string[];
+    interests:readonly string[];
+    admire:readonly string[];
+    guide:readonly string[];
+  };
+
+  /* Gallery */
+  galleryTitle: string;
+  moments: {
+    title: string;
+    description: string;
+  };
+
+  /* Itinerary */
+  itineraryLabel: string;
+  itineraryTitle: string;
+  itineraryDesc: string;
+
+  /* Reviews */
+  testimonialsLabel: string;
+  reviewsTitle: string;
+  reviewsDesc: string;
+  reviews:readonly {
+    name: string;
+    country: string;
+    comment: string;
+  }[];
+
+  /* Pricing */
+  priceSimulatorEyebrow: string;
+  priceSimulatorTitle: string;
+  priceSimulatorDesc: string;
+  selectPlan: string;
+
+  planLabels: Record<PlanKey, string>;
+  planDescriptions: Record<
+    PlanKey,
+    {
+      lines:readonly string[];
+      highlight?: string;
+      note?: string;
+    }
+  >;
+
+  priceUnit: {
+    hour: string;
+    day: string;
+  };
+
+  slider: {
+    hours: string;
+    days: string;
+  };
+
+  totalLabel: string;
+  recommended: string;
+
+  comparison: {
+    privateConsulting: string;
+    customItinerary: string;
+    tokyoGuiding: string;
+    nationwideGuiding: string;
+  };
+
+  /* Legal / Notes */
+  termsPrefix: string;
+  termsLink: string;
+  notes: {
+    points:readonly string[];
+    noticeTitle: string;
+    noticePoints:readonly string[];
+  };
+};
+
+const renderPlanTooltip = (plan: PlanKey, t: ContentSchema) => {
+
   const data = t.planDescriptions[plan];
 
   return (
@@ -146,7 +262,8 @@ useEffect(() => {
     entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
-          setActiveSection(e.target.dataset.section!);
+       const el = e.target as HTMLElement;
+setActiveSection(el.dataset.section!);
         }
       });
     },
@@ -285,6 +402,7 @@ const navLabels = {
   highlight?: string
   note?: string
 }
+
  const content = {
   
   en: {
@@ -858,7 +976,8 @@ selectPlan: "Seleziona il tuo piano",
 }as const;
 
 
-  const t = content[lang];
+  const t: ContentSchema = content[lang];
+
 const p = t.profile;
 const proPrice =
   plan === "pro" ? calculateProPrice(days) : null;
@@ -1866,7 +1985,7 @@ md:hover:shadow-[0_0_30px_rgba(199,162,74,0.35)]
     {/* SCROLL AREA */}
     <div
       ref={itineraryScrollRef}
-      onlick={(e) => e.stopPropagation()}
+      onClick={(e) => e.stopPropagation()}
      className="flex overflow-x-auto scroll-smooth no-scrollbar w-full h-full items-center snap-x snap-mandatory"
      >
       {itineraryImages.map((src, i) => (
